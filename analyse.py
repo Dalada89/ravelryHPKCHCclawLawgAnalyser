@@ -7,11 +7,14 @@ def sum_points(students):
     """
     sum_up = {}
     for student in students:
-        print(student['name'])
         if student['house'] not in sum_up.keys():
             sum_up[student['house']] = {
                 'classes': {}
             }
+        if 'classes' not in student:
+            print("No classes for:")
+            print(student)
+            continue
         for month in student['classes']:
             if month not in sum_up[student['house']]['classes'].keys():
                 sum_up[student['house']]['classes'][month] = {}
