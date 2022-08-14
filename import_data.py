@@ -50,7 +50,13 @@ def read_classes(df_sheet):
             possible_class = True
         # print(df_sheet[col][0])
         # print(type(df_sheet[col][0]))
-        if month_name != '' and possible_class and type(df_sheet[col][0]) != float and df_sheet[col][0] != '#' and df_sheet[col][0] != '':
+        if (
+            month_name != '' and
+            possible_class and
+            type(df_sheet[col][0]) != float and
+            df_sheet[col][0] != '#' and
+            df_sheet[col][0] != ''
+        ):
             dict_of_classes[month_name][df_sheet[col][0]] = col
 
     for idx, row in df_sheet.iterrows():
@@ -117,7 +123,13 @@ def read_quidditch(df_sheet):
             possible_class = True
         # print(df_sheet[col][0])
         # print(type(df_sheet[col][0]))
-        if match_name != '' and possible_class and type(df_sheet[col][0]) != float and df_sheet[col][0] != '#' and df_sheet[col][0] != '':
+        if (
+            match_name != '' and
+            possible_class and
+            type(df_sheet[col][0]) != float and
+            df_sheet[col][0] != '#' and
+            df_sheet[col][0] != ''
+        ):
             dict_of_matches[match_name][df_sheet[col][0]] = col
 
     for idx, row in df_sheet.iterrows():
@@ -125,7 +137,7 @@ def read_quidditch(df_sheet):
         if row['Student'] != '':
             for student in students:
                 if str(row['Student']) == 'nan':
-                    continue 
+                    continue
                 if row['Student'].lower() == student['name'].lower():
                     student['quidditch'] = {}
                     for match in dict_of_matches:

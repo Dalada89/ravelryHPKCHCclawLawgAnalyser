@@ -2,3 +2,4 @@ data/*
 !data/readme.md
 students.json
 .venv
+__pycache__
