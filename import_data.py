@@ -57,21 +57,29 @@ def read_classes(df_sheet, std_points_per_class, part_points_per_class):
                             # print(str(type(points_value)) + ' ' + str(points_value))
                             if type(points_value) == int:
                                 if points_value > 0:
-                                    partial = False
-                                    if str(df_sheet.iloc[idx, col_index+1]).lower() == 'p':
-                                        partial = True
-                                    if not partial:
-                                        student['classes'][month_key][class_key] = {
-                                            'partial': False,
-                                            'points': std_points_per_class[class_key],
-                                            'bonus': points_value - std_points_per_class[class_key]
-                                        }
+                                    if student['house'] not in ['SOS', 'NQFY']:
+                                        partial = False
+                                        if str(df_sheet.iloc[idx, col_index+1]).lower() == 'p':
+                                            partial = True
+                                        if not partial:
+                                            student['classes'][month_key][class_key] = {
+                                                'partial': False,
+                                                'points': std_points_per_class[class_key],
+                                                'bonus': points_value - std_points_per_class[class_key]
+                                            }
+                                        else:
+                                            student['classes'][month_key][class_key] = {
+                                                'partial': True,
+                                                'points': part_points_per_class[class_key],
+                                                'bonus': points_value - part_points_per_class[class_key]
+                                            }
                                     else:
                                         student['classes'][month_key][class_key] = {
-                                            'partial': True,
-                                            'points': part_points_per_class[class_key],
-                                            'bonus': points_value - part_points_per_class[class_key]
-                                        }
+                                                'partial': True,
+                                                'points': 0,
+                                                'bonus': 0,
+                                                'took_part': True
+                                            }
 
                     # print(student['name'])
     # print(dict_of_classes)
