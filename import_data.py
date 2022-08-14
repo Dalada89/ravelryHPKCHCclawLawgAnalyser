@@ -215,7 +215,7 @@ def load_sheets(xlsxpath):
 
 def get():
     global students
-    xlsxpath = Path('./data/Claw Lawg W2022 UNOFFICIAL.xlsx')
+    xlsxpath = Path('./data/Claw Lawg S2022 UNOFFICIAL.xlsx')
     df_sheets = load_sheets(xlsxpath)
 
     # read_classes(df_sheets['Classes +'])
