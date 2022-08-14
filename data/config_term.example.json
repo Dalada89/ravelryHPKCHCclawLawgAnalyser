@@ -1,0 +1,25 @@
+{
+    "file": "./data/Claw Lawg W2022 UNOFFICIAL.xlsx",
+    "std_points_per_class": {
+        "Det": 10,
+        "Ancient Runes": 15,
+        "Charms": 15,
+        "COMC": 15,
+        "DADA": 15,
+        "Divination": 15,
+        "Herbology": 15,
+        "Magical Transport": 15,
+        "Potions": 15
+    },
+    "part_points_per_class": {
+        "Det": 0,
+        "Ancient Runes": 5,
+        "Charms": 5,
+        "COMC": 5,
+        "DADA": 5,
+        "Divination": 5,
+        "Herbology": 5,
+        "Magical Transport": 5,
+        "Potions": 5
+    }
+}

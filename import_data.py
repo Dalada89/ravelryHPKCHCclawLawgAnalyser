@@ -1,50 +1,26 @@
 import pandas as pd
 import re
 import calendar
+import json
 from pathlib import Path
 
 students = []
 
-std = 15
-std_points_per_class = {
-    'Det': 10,
-    'Ancient Runes': std,
-    'Charms': std,
-    'COMC': std,
-    'DADA': std,
-    'Divination': std,
-    'Herbology': std,
-    'Magical Transport': std,
-    'Potions': std
-}
-std = 5
-part_points_per_class = {
-    'Det': 0,
-    'Ancient Runes': std,
-    'Charms': std,
-    'COMC': std,
-    'DADA': std,
-    'Divination': std,
-    'Herbology': std,
-    'Magical Transport': std,
-    'Potions': std
-}
 
-
-def read_classes(df_sheet):
+def read_classes(df_sheet, std_points_per_class, part_points_per_class):
     global students
     months = list(calendar.month_name)
+    for idx, month in enumerate(months):
+        months[idx] = month.lower()
     dict_of_classes = {}
     month_name = ''
-    # print(df_sheet)
     for col in df_sheet.columns:
         possible_class = False
         if re.search('unnamed:', col, re.IGNORECASE):
             possible_class = True
         else:
             month_name = ''
-
-        if col in months:
+        if col.lower() in months:
             month_name = str(col)
             dict_of_classes[month_name] = {}
             possible_class = True
@@ -213,16 +189,19 @@ def load_sheets(xlsxpath):
     return df_sheets
 
 
-def get():
+def get(term):
     global students
-    xlsxpath = Path('./data/Claw Lawg S2022 UNOFFICIAL.xlsx')
+    configfile = Path('./data/config_{term}.json'.format(term=term))
+    with open(configfile, 'r') as fileobj:
+        config = json.load(fileobj)
+    xlsxpath = Path(config['file'])
     df_sheets = load_sheets(xlsxpath)
 
     # read_classes(df_sheets['Classes +'])
 
     read_students(df_sheets['vLookup'])
     read_quidditch(df_sheets['Quidditch'])
-    read_classes(df_sheets['Classes +'])
+    read_classes(df_sheets['Classes +'], config['std_points_per_class'], config['part_points_per_class'])
 
     return students
 

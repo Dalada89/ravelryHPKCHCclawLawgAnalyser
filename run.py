@@ -4,7 +4,8 @@ from pathlib import Path
 
 
 def main():
-    students = import_data.get()
+    term = "S2022"
+    students = import_data.get(term)
     # print(len(students))
     with open(Path('students.json'), 'w') as fileobj:
         json.dump(students, fileobj)

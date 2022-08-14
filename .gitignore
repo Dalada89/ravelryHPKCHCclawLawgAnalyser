@@ -1,5 +1,6 @@
 data/*
 !data/readme.md
+!data/config_term.example.json
 students.json
 .venv
 __pycache__
