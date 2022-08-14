@@ -4,3 +4,4 @@ data/*
 students.json
 .venv
 __pycache__
+sum_points.json
