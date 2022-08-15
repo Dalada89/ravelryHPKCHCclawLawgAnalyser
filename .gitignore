@@ -1,7 +1,8 @@
 data/*
 !data/readme.md
 !data/config_term.example.json
-students.json
+results/*
+!results/readme.md
+!results/plots/readme.md
 .venv
 __pycache__
-sum_points.json
