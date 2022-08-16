@@ -14,7 +14,7 @@ houses = {
 }
 
 
-def draw_classes(sum_points):
+def draw_classes(sum_points, students):
     list_of_classes = list(sum_points['Ravenclaw']['classes']['MAY'].keys())
     # classes = []
     months = ['MAY', 'JUNE', 'JULY']
@@ -38,11 +38,41 @@ def draw_classes(sum_points):
         save_name = './results/plots/{term}_cls_{klasse}.png'
         plt.savefig(PurePath(save_name.format(term=term, klasse=klasse)), dpi=300)
 
+    for klasse in list_of_classes:
+        bx_data = {}
+        for month in months:
+            bx_data[month] = {}
+            for house in houses:
+                bx_data[month][house] = []
+        for student in students:
+            if 'classes' not in student:
+                continue
+            for month in months:
+                points = student['classes'][month][klasse]['points'] + student['classes'][month][klasse]['bonus']
+                if points > 0:
+                    bx_data[month][student['house']].append(points)
+        for month in months:
+            fig, ax = plt.subplots()
+            colums = []
+            for house in houses:
+                colums.append(bx_data[month][house])
+            box = ax.boxplot(colums, notch=True, patch_artist=True)
+            for patch, house in zip(box['boxes'], houses):
+                patch.set_facecolor(houses[house])
+            ax.set_xticks([1, 2, 3, 4], houses, rotation=0)
+            ax.grid(axis='y')
+            ax.set_ylabel('Points per student')
+            ax.set_title(klasse + ' ' + term + ' ' + month)
+            save_name = './results/plots/{term}_bx_cls_{klasse}_{m}.png'
+            plt.savefig(PurePath(save_name.format(term=term, klasse=klasse, m=month)), dpi=300)
+
 
 def main():
+    with open(PurePath('./results/students.json'), 'r') as fileobj:
+        students = json.load(fileobj)
     with open(PurePath('./results/sum_points.json'), 'r') as fileobj:
         sum_points = json.load(fileobj)
-    draw_classes(sum_points)
+    draw_classes(sum_points, students)
 
 
 if __name__ == '__main__':
